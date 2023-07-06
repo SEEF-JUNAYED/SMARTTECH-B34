@@ -9,6 +9,7 @@ import org.testng.asserts.SoftAssert;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class StepDef {
 
@@ -16,7 +17,7 @@ public class StepDef {
 
 	@Given("Open browser and go to the application")
 	public void open_browser_and_go_to_the_application() {
-
+		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(
@@ -45,12 +46,11 @@ public class StepDef {
 	@Then("check if logout button visible or not")
 	public void check_if_logout_button_visible_or_not() {
 
-		
-		SoftAssert sf = new SoftAssert ();
-		
+		SoftAssert sf = new SoftAssert();
+
 		sf.assertTrue(driver.findElement(By.xpath("//*[@id='logoutButton']")).isDisplayed());
-		
-        sf.assertAll();
+
+		sf.assertAll();
 	}
 
 	@When("Put invalid username")
@@ -70,12 +70,12 @@ public class StepDef {
 	public void check_if_it_is_giving_alert_msg_invalid_username_or_password() {
 
 		Alert alert = driver.switchTo().alert();
-		
+
 		String alertmsg = alert.getText();
-		
-		SoftAssert sf = new SoftAssert ();
+
+		SoftAssert sf = new SoftAssert();
 		sf.assertEquals(alertmsg, "Invalid username or password");
-		
+
 	}
 
 	@When("Put null username")
